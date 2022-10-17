@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -87,7 +88,8 @@ fun TitleBar(title: String) {
             text = stringResource(R.string.app_title_bar_text),
             fontFamily = fontBold,
             fontSize = 20.sp,
-            textAlign = TextAlign.Start
+            textAlign = TextAlign.Start,
+            color = Color.Black
         )
     }
 }
@@ -101,11 +103,16 @@ fun SearchBox(
 
     OutlinedTextField(
         value = searchText, onValueChange = onValueChange,
-        placeholder = { Text(text = "Search", fontFamily = fontLight) },
+        placeholder = { Text(
+            text = "Search",
+            fontFamily = fontLight,
+            color = Color.Black,
+        ) },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search Icon"
+                imageVector = Icons.Outlined.Search,
+                contentDescription = "Search Icon",
+                tint = Color.Black
             )
         },
         modifier = Modifier
@@ -177,6 +184,7 @@ fun PersonalityCard(personalityTypes: PersonalityType) {
                         text = personalityTypes.keyword1,
                         fontFamily = fontMedium,
                         fontSize = 12.sp ,
+                        color = Color.Black,
                         modifier = Modifier
                             .padding(horizontal = 6.dp, vertical = 2.dp)
                     )
@@ -188,6 +196,7 @@ fun PersonalityCard(personalityTypes: PersonalityType) {
                         text = personalityTypes.keyword2,
                         fontFamily = fontMedium,
                         fontSize = 12.sp ,
+                        color = Color.Black,
                         modifier = Modifier
                             .padding(horizontal = 6.dp, vertical = 2.dp)
                     )
@@ -199,6 +208,7 @@ fun PersonalityCard(personalityTypes: PersonalityType) {
                         text = personalityTypes.keyword1,
                         fontFamily = fontMedium,
                         fontSize = 12.sp ,
+                        color = Color.Black,
                         modifier = Modifier
                             .padding(horizontal = 6.dp, vertical = 2.dp)
                     )
