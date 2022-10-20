@@ -8,25 +8,19 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,36 +34,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PersonalityAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .background(Grey)
-                            .fillMaxSize()
-                    ) {
-
-                        var search by remember {
-                            mutableStateOf("")
-                        }
-
-                        TitleBar(title = "Personality App")
-                        SearchBox(
-                            searchText = search,
-                            onValueChange = { search = it }
-                        )
-                        PersonalityTypesComponent(
-                            searchText = search
-                        )
-                    }
+            PersonalityAppTheme()
+                {
+                    FinalApp()
                 }
             }
         }
     }
-}
+
+
 
 
 @Composable
@@ -77,6 +50,7 @@ fun TitleBar(title: String) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
+            .background(MaterialTheme.colors.background)
             .fillMaxWidth()
             .padding(
                 start = 15.dp,
@@ -89,7 +63,7 @@ fun TitleBar(title: String) {
             fontFamily = fontBold,
             fontSize = 20.sp,
             textAlign = TextAlign.Start,
-            color = Color.Black
+            color = MaterialTheme.colors.onSurface
         )
     }
 }
@@ -103,27 +77,30 @@ fun SearchBox(
 
     OutlinedTextField(
         value = searchText, onValueChange = onValueChange,
-        placeholder = { Text(
-            text = "Search",
-            fontFamily = fontLight,
-            color = Color.Black,
-        ) },
+        placeholder = {
+            Text(
+                text = "Search",
+                fontFamily = fontLight,
+                color = Black,
+            )
+        },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Outlined.Search,
                 contentDescription = "Search Icon",
-                tint = Color.Black
+                tint = Black
             )
         },
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 25.dp, start = 15.dp, end = 15.dp)
-            .background(color = Color.White, shape = RoundedCornerShape(8.dp)),
+            .background(color = Grey, shape = RoundedCornerShape(8.dp)),
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Color.LightGray,
-            unfocusedBorderColor = Color.White,
-            cursorColor = Color.LightGray,
-            trailingIconColor = Black
+            focusedBorderColor = MaterialTheme.colors.surface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            cursorColor = MaterialTheme.colors.secondary,
+            trailingIconColor = MaterialTheme.colors.onSurface,
+            textColor = Black
         )
     )
 }
@@ -139,7 +116,9 @@ fun PersonalityTypesComponent(
 
 
     LazyColumn(
-        Modifier.padding(15.dp),
+        Modifier
+            .padding(15.dp)
+            .background(MaterialTheme.colors.background),
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
         items(personalityOptions.size) {
@@ -183,7 +162,7 @@ fun PersonalityCard(personalityTypes: PersonalityType) {
                     Text(
                         text = personalityTypes.keyword1,
                         fontFamily = fontMedium,
-                        fontSize = 12.sp ,
+                        fontSize = 12.sp,
                         color = Color.Black,
                         modifier = Modifier
                             .padding(horizontal = 6.dp, vertical = 2.dp)
@@ -195,7 +174,7 @@ fun PersonalityCard(personalityTypes: PersonalityType) {
                     Text(
                         text = personalityTypes.keyword2,
                         fontFamily = fontMedium,
-                        fontSize = 12.sp ,
+                        fontSize = 12.sp,
                         color = Color.Black,
                         modifier = Modifier
                             .padding(horizontal = 6.dp, vertical = 2.dp)
@@ -205,9 +184,9 @@ fun PersonalityCard(personalityTypes: PersonalityType) {
                     backgroundColor = personalityTypes.timeBackgroundColor
                 ) {
                     Text(
-                        text = personalityTypes.keyword1,
+                        text = personalityTypes.keyword3,
                         fontFamily = fontMedium,
-                        fontSize = 12.sp ,
+                        fontSize = 12.sp,
                         color = Color.Black,
                         modifier = Modifier
                             .padding(horizontal = 6.dp, vertical = 2.dp)
@@ -265,8 +244,47 @@ private fun ExpandItemButton(
     }
 }
 
+
 @Preview
 @Composable
 fun PersonalityCardPreview() {
-    PersonalityTypesComponent()
+    PersonalityAppTheme {
+        FinalApp()
+    }
+}
+
+
+@Preview
+@Composable
+fun PersonalityCardDarkPreview() {
+    PersonalityAppTheme(darkTheme = true) {
+        FinalApp()
+    }
+}
+
+@Composable
+fun FinalApp() {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+
+                var search by remember {
+                    mutableStateOf("")
+                }
+
+                TitleBar(title = "Personality App")
+                SearchBox(
+                    searchText = search,
+                    onValueChange = { search = it }
+                )
+                PersonalityTypesComponent(
+                    searchText = search
+                )
+            }
+        }
 }
