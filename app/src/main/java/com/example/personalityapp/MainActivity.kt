@@ -35,14 +35,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PersonalityAppTheme()
-                {
-                    FinalApp()
-                }
+            {
+                FinalApp()
             }
         }
     }
-
-
+}
 
 
 @Composable
@@ -130,98 +128,105 @@ fun PersonalityTypesComponent(
 }
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PersonalityCard(personalityTypes: PersonalityType) {
     Card(
-        shape = RoundedCornerShape(14.dp),
-        modifier = Modifier.fillMaxSize(),
-        backgroundColor = personalityTypes.backgroundColor
+        elevation = 0.dp,
+        backgroundColor = Color.Transparent,
     ) {
         var expanded by remember {
             mutableStateOf(false)
         }
-
-
-
-        Column(
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .animateContentSize(
-                    animationSpec = tween(500)
-                )
-                .padding(20.dp)
+        Card(
+            shape = RoundedCornerShape(14.dp),
+            modifier = Modifier.fillMaxSize(),
+            backgroundColor = personalityTypes.backgroundColor,
+            onClick = { expanded = !expanded },
+            indication = null
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.fillMaxWidth()
+            Column(
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .animateContentSize(
+                        animationSpec = tween(400)
+                    )
+                    .padding(20.dp)
             ) {
-                Card(
-                    backgroundColor = personalityTypes.timeBackgroundColor
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = personalityTypes.keyword1,
-                        fontFamily = fontMedium,
-                        fontSize = 12.sp,
-                        color = Color.Black,
-                        modifier = Modifier
-                            .padding(horizontal = 6.dp, vertical = 2.dp)
+                    Card(
+                        backgroundColor = personalityTypes.timeBackgroundColor
+                    ) {
+                        Text(
+                            text = personalityTypes.keyword1,
+                            fontFamily = fontMedium,
+                            fontSize = 12.sp,
+                            color = Color.Black,
+                            modifier = Modifier
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
+                    }
+                    Card(
+                        backgroundColor = Color.White
+                    ) {
+                        Text(
+                            text = personalityTypes.keyword2,
+                            fontFamily = fontMedium,
+                            fontSize = 12.sp,
+                            color = Color.Black,
+                            modifier = Modifier
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
+                    }
+                    Card(
+                        backgroundColor = personalityTypes.timeBackgroundColor
+                    ) {
+                        Text(
+                            text = personalityTypes.keyword3,
+                            fontFamily = fontMedium,
+                            fontSize = 12.sp,
+                            color = Color.Black,
+                            modifier = Modifier
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    ExpandItemButton(
+                        expanded = expanded,
+                        color = personalityTypes.contentColor,
+                        onClick = { expanded = !expanded }
                     )
                 }
-                Card(
-                    backgroundColor = Color.White
-                ) {
-                    Text(
-                        text = personalityTypes.keyword2,
-                        fontFamily = fontMedium,
-                        fontSize = 12.sp,
-                        color = Color.Black,
-                        modifier = Modifier
-                            .padding(horizontal = 6.dp, vertical = 2.dp)
-                    )
-                }
-                Card(
-                    backgroundColor = personalityTypes.timeBackgroundColor
-                ) {
-                    Text(
-                        text = personalityTypes.keyword3,
-                        fontFamily = fontMedium,
-                        fontSize = 12.sp,
-                        color = Color.Black,
-                        modifier = Modifier
-                            .padding(horizontal = 6.dp, vertical = 2.dp)
-                    )
-                }
 
-                Spacer(modifier = Modifier.weight(1f))
-
-                ExpandItemButton(
-                    expanded = expanded,
-                    color = personalityTypes.contentColor,
-                    onClick = { expanded = !expanded }
-                )
-            }
-
-            Text(
-                text = personalityTypes.title,
-                fontFamily = fontBold,
-                fontSize = 18.sp,
-                color = personalityTypes.contentColor,
-                textAlign = TextAlign.Start
-            )
-
-            AnimatedVisibility(
-                visible = expanded,
-                enter = fadeIn(initialAlpha = 0.1f),
-                exit = fadeOut(targetAlpha = 0.3f)
-            ) {
                 Text(
-                    text = personalityTypes.description,
-                    fontFamily = fontLight,
-                    fontSize = 16.sp,
+                    text = personalityTypes.title,
+                    fontFamily = fontBold,
+                    fontSize = 18.sp,
                     color = personalityTypes.contentColor,
                     textAlign = TextAlign.Start
                 )
+
+                AnimatedVisibility(
+                    visible = expanded,
+                    enter = fadeIn(initialAlpha = 0.1f),
+                    exit = fadeOut(
+                        animationSpec = tween(durationMillis = 100),
+                        targetAlpha = 0.3f)
+                ) {
+                    Text(
+                        text = personalityTypes.description,
+                        fontFamily = fontLight,
+                        fontSize = 16.sp,
+                        color = personalityTypes.contentColor,
+                        textAlign = TextAlign.Start
+                    )
+                }
             }
         }
     }
@@ -264,27 +269,27 @@ fun PersonalityCardDarkPreview() {
 
 @Composable
 fun FinalApp() {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
 
-                var search by remember {
-                    mutableStateOf("")
-                }
-
-                TitleBar(title = "Personality App")
-                SearchBox(
-                    searchText = search,
-                    onValueChange = { search = it }
-                )
-                PersonalityTypesComponent(
-                    searchText = search
-                )
+            var search by remember {
+                mutableStateOf("")
             }
+
+            TitleBar(title = "Personality App")
+            SearchBox(
+                searchText = search,
+                onValueChange = { search = it }
+            )
+            PersonalityTypesComponent(
+                searchText = search
+            )
         }
+    }
 }
