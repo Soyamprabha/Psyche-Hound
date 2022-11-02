@@ -9,7 +9,7 @@ Go to the releases page, download & install the .apk file.
 <br>
 ## *Screenshots*
 <img align=left src="screenshots\app-mockup-android-screenshot-1-default-1080x1920-1.png" width=160>
-<img align=middle src="screenshots\app-mockup-android-screenshot-1-default-1080x1920-2.png" width=160>
+<img align=left src="screenshots\app-mockup-android-screenshot-1-default-1080x1920-2.png" width=160>
 <img align=middle src="screenshots\app-mockup-android-screenshot-1-default-1080x1920-3.png" width=160>
 
 <br>
