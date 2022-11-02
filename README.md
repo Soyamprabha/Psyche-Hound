@@ -1,6 +1,6 @@
 # **Psyche Hound**
 
-Psyche Hound is a Android app for identfying your personality. 😉
+Psyche Hound is a Android app for identfying your personality type. 🤗
 
 ## *Installation*
 
@@ -12,7 +12,6 @@ Go to the releases page, download & install the .apk file.
 <img align=left src="screenshots\app-mockup-android-screenshot-1-default-1080x1920-2.png" width=160>
 <img align=middle src="screenshots\app-mockup-android-screenshot-1-default-1080x1920-3.png" width=160>
 
-<br>
 <br>
 
 ## *Team Members* 💟
